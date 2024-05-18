@@ -9,14 +9,46 @@ class ClockIn extends Component {
         super(props);
         this.state = {
             isClockedIn: localStorage.getItem('isClockedIn') === 'true',
+            clockInTime: localStorage.getItem('clockInTime') ? new Date(localStorage.getItem('clockInTime')) : null,
+            totalTime: localStorage.getItem('totalTime') ? parseInt(localStorage.getItem('totalTime'), 10) : 0,
         };
     }
 
     handleClockInOut = () => {
-        const newClockStatus = !this.state.isClockedIn;
-        this.setState({ isClockedIn: newClockStatus }, () => {
-            localStorage.setItem('isClockedIn', newClockStatus.toString());
-        });
+        if (this.state.isClockedIn) {
+            // User is clocking out
+            const clockOutTime = new Date();
+            const clockInTime = this.state.clockInTime;
+            const duration = (clockOutTime - clockInTime) / 1000; // Duration in seconds
+            const totalTime = this.state.totalTime + duration;
+
+            this.setState({ 
+                isClockedIn: false, 
+                clockInTime: null,
+                totalTime 
+            }, () => {
+                localStorage.setItem('isClockedIn', 'false');
+                localStorage.removeItem('clockInTime');
+                localStorage.setItem('totalTime', totalTime.toString());
+            });
+        } else {
+            // User is clocking in
+            const clockInTime = new Date();
+            this.setState({ 
+                isClockedIn: true, 
+                clockInTime 
+            }, () => {
+                localStorage.setItem('isClockedIn', 'true');
+                localStorage.setItem('clockInTime', clockInTime.toString());
+            });
+        }
+    };
+
+    formatTime = (seconds) => {
+        const hrs = Math.floor(seconds / 3600);
+        const mins = Math.floor((seconds % 3600) / 60);
+        const secs = Math.floor(seconds % 60);
+        return `${hrs}h ${mins}m ${secs}s`;
     };
 
     render () {
