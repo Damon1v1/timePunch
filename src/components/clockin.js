@@ -6,7 +6,9 @@ import Card from 'react-bootstrap/Card';
 class clockin extends Component {
     render () {
         return  (
-            <Card id = 'clockin'></Card>
+            <Card id = 'clockin'>
+                
+            </Card>
         )
     }
 }
