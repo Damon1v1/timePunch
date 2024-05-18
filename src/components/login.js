@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
-import  Form from "react-bootstrap";
+import { Form } from 'react-bootstrap';
 import Calo from '../assets/calo.jpg';
 
 class LogIn extends Component {

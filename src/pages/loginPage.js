@@ -1,20 +1,22 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import React,  { Component }  from 'react';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import LogIn from '../components/login';
 import ClockIn from '../components/clockin';
 
 
-const loginPage = () => {
-    return (
-        <div className='loginPage'>
-            <Router>
-                <Switch>
-                    <Route path='/' component = {LogIn} />
-                    <Route path='/clockedin' component = {ClockIn} />
-                </Switch>
-            </Router>
-        </div>
-    )
+class LoginPage extends Component {
+    render () {
+        return (
+            <div className='loginPage'>
+                <Router>
+                    <Routes>
+                        <Route path='/' Component = {LogIn} />
+                        <Route path='/clockedin' Component = {ClockIn} />
+                    </Routes>
+                </Router>
+            </div>
+        )
+    }
 };
 
-export default loginPage;
+export default LoginPage;
