@@ -12,7 +12,7 @@ class LogIn extends Component {
                     <Card.Img variant="top" src={Calo} />
                     <Card.Title>Calo time tracking</Card.Title>
                     <Form.Control type="text" className="empName" placeholder="Name" />
-                    <Button>Login</Button>
+                    <Button href="/clockedin">Login</Button>
                 </Card.Body>
             </Card>
         );
