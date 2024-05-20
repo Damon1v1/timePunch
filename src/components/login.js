@@ -12,10 +12,29 @@ function LogIn() {
         setEmpName(event.target.value);
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Employee name:', empName);
-        history('/clockedin')
+        
+        try {
+            const response = await fetch('/addUser', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ empName })
+            });
+            
+            if (response.ok) {
+                console.log('Logged in successfully');
+                // Redirect or handle success
+            } else {
+                console.error('Failed to login');
+                // Handle failure
+            }
+        } catch (error) {
+            console.error('Error:', error);
+            // Handle error
+        }
     };
 
     return (
