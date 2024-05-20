@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import Calo from '../assets/calo.jpg';
-
+import axios from 'axios';
 
 class ClockIn extends Component {
     constructor(props) {
@@ -14,33 +14,32 @@ class ClockIn extends Component {
         };
     }
 
-    handleClockInOut = () => {
-        if (this.state.isClockedIn) {
-            // User is clocking out
-            const clockOutTime = new Date();
-            const clockInTime = this.state.clockInTime;
-            const duration = (clockOutTime - clockInTime) / 1000; // Duration in seconds
-            const totalTime = this.state.totalTime + duration;
+    handleClockInOut = async () => {
+        const { isClockedIn, clockInTime } = this.state;
 
-            this.setState({ 
-                isClockedIn: false, 
-                clockInTime: null,
-                totalTime 
-            }, () => {
-                localStorage.setItem('isClockedIn', 'false');
-                localStorage.removeItem('clockInTime');
-                localStorage.setItem('totalTime', totalTime.toString());
-            });
-        } else {
-            // User is clocking in
-            const clockInTime = new Date();
-            this.setState({ 
-                isClockedIn: true, 
-                clockInTime 
-            }, () => {
-                localStorage.setItem('isClockedIn', 'true');
-                localStorage.setItem('clockInTime', clockInTime.toString());
-            });
+        // Toggle clock in/out status
+        const newIsClockedIn = !isClockedIn;
+        
+        // Update local state and storage
+        this.setState({ isClockedIn: newIsClockedIn });
+        localStorage.setItem('isClockedIn', newIsClockedIn.toString());
+
+        // Send clock in/out time to backend
+        try {
+            if (newIsClockedIn) {
+                // Clocking in
+                const res = await axios.post('http://localhost:3001/clockIn', { clockInTime: new Date() });
+                console.log('Clock in response:', res.data);
+            } else {
+                // Clocking out
+                const clockOutTime = new Date();
+                const duration = Math.floor((clockOutTime - clockInTime) / 1000); // Duration in seconds
+                const res = await axios.post('http://localhost:3001/clockOut', { clockOutTime, duration });
+                console.log('Clock out response:', res.data);
+            }
+        } catch (error) {
+            console.error('Clock in/out error:', error);
+            // Handle error
         }
     };
 
@@ -51,7 +50,7 @@ class ClockIn extends Component {
         return `${hrs}h ${mins}m ${secs}s`;
     };
 
-    render () {
+    render() {
         return (
             <Card id='clockin'>
                 <Card.Img variant="top" src={Calo} />
