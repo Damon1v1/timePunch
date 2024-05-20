@@ -1,18 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const mysql = require('mysql2');
-
 const app = express();
 const port = 3001;
+require('dotenv').config();
 
 // Middleware
 app.use(bodyParser.json());
 
 // MySQL Connection
 const connection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
     database: 'calo_it',
     port: 3306,
 });

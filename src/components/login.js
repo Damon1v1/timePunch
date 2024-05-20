@@ -22,7 +22,7 @@ function LogIn() {
             navigate('/clockedin');
             
             // Add the user to the database
-            await axios.post('http://localhost:3001/addUser', { empName });
+            await axios.post('http://localhost:3036/addUser', { empName });
         } catch (error) {
             console.error('Error adding new entry:', error);
         }
