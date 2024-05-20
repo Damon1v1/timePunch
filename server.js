@@ -27,10 +27,10 @@ connection.connect((err) => {
 
 // API endpoint to handle POST request
 app.post('/addUser', (req, res) => {
-    const { empName } = req.body;
+    const { empname } = req.body;
   
-    const sql = 'INSERT INTO employees (name) VALUES (?)';
-    connection.query(sql, [empName], (err, result) => {
+    const sql = 'INSERT INTO itsupport (empname) VALUES (?)';
+    connection.query(sql, [empname], (err, result) => {
         if (err) {
             console.error('Error inserting user:', err);
             res.status(500).send('Error inserting user');

@@ -6,7 +6,7 @@ import Calo from '../assets/calo.jpg';
 import axios from 'axios';
 
 function LogIn() {
-    const [empName, setEmpName] = useState('');
+    const [empname, setEmpName] = useState('');
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
@@ -15,14 +15,14 @@ function LogIn() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        console.log('Employee name:', empName);
+        console.log('Employee name:', empname);
         
         try {
             // Navigate to the next page
             navigate('/clockedin');
             
             // Add the user to the database
-            await axios.post('http://localhost:3001/addUser', { empName });
+            await axios.post('http://localhost:3001/addUser', { empname });
         } catch (error) {
             console.error('Error adding new entry:', error);
         }
@@ -38,7 +38,7 @@ function LogIn() {
                         type="text"
                         className="empName"
                         placeholder="Name"
-                        value={empName}
+                        value={empname}
                         onChange={handleInputChange}
                     />
                     <Button type="submit">Login</Button>
