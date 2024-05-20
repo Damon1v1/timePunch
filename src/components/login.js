@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
 import { Form, FormControl, Button } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import Card from 'react-bootstrap/Card';
@@ -18,13 +18,14 @@ function LogIn() {
         console.log('Employee name:', empname);
         
         try {
-            // Navigate to the next page
-            navigate('/clockedin');
-            
             // Add the user to the database
             await axios.post('http://localhost:3001/addUser', { empname });
+            
+            // Navigate to the next page
+            navigate('/clockedin');
         } catch (error) {
             console.error('Error adding new entry:', error);
+            // Display an error message to the user
         }
     };
 

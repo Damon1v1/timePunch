@@ -3,10 +3,12 @@ const bodyParser = require('body-parser');
 const mysql = require('mysql2');
 const app = express();
 const port = 3001;
+const cors = require('cors'); // Import the cors middleware
 require('dotenv').config();
 
 // Middleware
 app.use(bodyParser.json());
+app.use(cors()); // Use the cors middleware to enable CORS
 
 // MySQL Connection
 const connection = mysql.createConnection({
