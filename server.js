@@ -27,7 +27,7 @@ connection.connect((err) => {
     console.log('Connected to the MySQL database');
 });
 
-// API endpoint to handle POST request
+// API endpoints to handle POST requests
 app.post('/addUser', (req, res) => {
     const { empname } = req.body;
   
